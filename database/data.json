@@ -73,7 +73,7 @@
       "instagram": "@francocalegari_dw",
       "instagram_url": "https://www.instagram.com/francocalegari_dw",
       "created_at": "2026-02-12T20:55:27.856Z",
-      "updated_at": "2026-02-12T20:55:27.856Z"
+      "updated_at": "2026-02-12T20:57:28.073Z"
     }
   ],
   "apps_instaladas": [
@@ -259,13 +259,13 @@
       "so_distribucion": "Mini OS v2024.05"
     },
     {
-      "id": 5,
+      "id": 6,
       "cliente_id": 5,
       "cpu_nombre": "exynos9610",
       "cpu_potencia": "1.74GHz 8 núcleos",
       "cpu_fabricante": "samsung",
       "cpu_arquitectura": "arm64-v8a",
-      "gpu_fabricante": "Samsung",
+      "gpu_fabricante": "Qualcomm",
       "gpu_vram": "Compartida",
       "gpu_nombre": "Mali-G72",
       "ram_capacidad": "3.5 GB",
@@ -275,14 +275,14 @@
       "almacenamiento_capacidad": "52GB",
       "wifi": "2.4GHz y 5GHz",
       "ethernet": "",
-      "bluetooth": "Deshabilitado",
+      "bluetooth": "5.0",
       "placa_base": "samsung SM-A505G (universal9610)",
       "bios_version": "release-keys",
       "bios_fecha": "Wed Mar  1 07:36:55 KST 2023",
       "pantalla_specs": "SM-A505G - 420dpi",
       "pantalla_tipo": "AMOLED / IPS LCD",
       "pantalla_resolucion": "1080 x 2340",
-      "pantalla_refresco": "60hz",
+      "pantalla_refresco": "90hz",
       "io_puertos": "USB-C x1, 3.5mm jack x1",
       "so_nombre": "Android 11",
       "so_distribucion": "RP1A.200720.012.A505GUBU9CWC1 | Parche: 2023-01-01"
@@ -336,6 +336,6 @@
   "nextId": {
     "clientes": 6,
     "apps_instaladas": 10,
-    "fichas_tecnicas": 6
+    "fichas_tecnicas": 7
   }
 }

@@ -39,8 +39,12 @@ app.use((req, res) => {
 });
 
 // ─── Start Server ───
-app.listen(PORT, () => {
-	console.log(`\n🚀 Server running at http://localhost:${PORT}`);
-	console.log(`📋 Admin dashboard: http://localhost:${PORT}/admin`);
-	console.log(`\n`);
-});
+if (process.env.VERCEL) {
+	module.exports = app;
+} else {
+	app.listen(PORT, () => {
+		console.log(`\n🚀 Server running at http://localhost:${PORT}`);
+		console.log(`📋 Admin dashboard: http://localhost:${PORT}/admin`);
+		console.log(`\n`);
+	});
+}

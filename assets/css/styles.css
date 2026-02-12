@@ -1,0 +1,411 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html{
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #F2DFBB; /* Fondo del cuerpo */
+    color: #192E59; /* Color del texto principal */
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap; /* Permitir que los elementos se ajusten */
+    background-color: #192E59; /* Fondo del navbar */
+    padding: 1rem;
+}
+
+.logo {
+    color: #F2DFBB; /* Color del logo */
+    font-size: 1.5rem;
+    transition: cubic-bezier(0.075, 0.82, 0.165, 1) 500ms;
+    border-radius: 15px;
+    padding: 0.5rem; /* Añadir padding inicial para el fondo al pasar el mouse */
+    background-color: transparent; /* Fondo transparente inicialmente */
+    text-decoration: none;
+}
+
+.logo:hover {
+    transform: scale(1.2);
+    transition: cubic-bezier(0.075, 0.82, 0.165, 1) 500ms;
+    background-color: #184A8C;
+    cursor: pointer;
+}
+
+.nav-buttons {
+    display: flex;
+    flex-wrap: wrap; /* Permitir que los botones se ajusten */
+}
+
+.nav-buttons button {
+    margin-left: 1rem;
+    background-color: #184A8C; /* Fondo de los botones del navbar */
+    color: #F2DFBB; /* Color del texto de los botones */
+    border: none;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+}
+
+.nav-buttons button:hover {
+    background-color: #4988BF; /* Fondo de los botones al pasar el cursor */
+}
+
+main {
+    padding: 2rem;
+    background-color: white;
+    margin: 2rem auto;
+    max-width: 800px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 15px; /* Redondear bordes */
+}
+
+h1 {
+    color: #192E59; /* Color del título */
+    text-align: center;
+}
+
+section {
+    margin-bottom: 2rem;
+}
+
+section h1 {
+    margin-bottom: 1rem;
+}
+
+input {
+    padding: 0.5rem;
+    width: auto;
+    border: none; /* Borde del input */
+    border-radius: 5px;
+}
+
+input:focus {
+    outline: none;
+    border-color: #184A8C; /* Borde del input al enfocar */
+}
+
+#contact-info h2 {
+    color: #192E59; /* Color del título de la sección de contacto */
+}
+
+#contact-info p {
+    color: #192E59; /* Color del texto de la sección de contacto */
+    line-height: 1.6;
+}
+
+#contact-info a {
+    color: #184A8C; /* Color de los enlaces */
+    text-decoration: none;
+}
+
+#contact-info a:hover {
+    text-decoration: underline;
+}
+
+.seachcontainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid #4988BF;
+    border-radius: 15px;
+    width: fit-content;
+    margin: auto;
+    padding: 0.5rem;
+}
+
+#clientSeachBar {
+    height: 12rem;
+}
+
+.seachcontainer button {
+    background-color: transparent;
+    border: none;
+}
+
+main {
+    border-radius: 15px;
+}
+
+footer {
+    background-color: #184A8C;
+    padding: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap; /* Permitir que los elementos del footer se ajusten */
+}
+
+footer a:hover {
+    transform: scale(1.4);
+    transition: 200ms cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+footer a {
+    font-size: 25px;
+    transition: 200ms ease-out;
+}
+
+footer a i {
+    color: #F2DFBB;
+}
+
+/* PC health tips */
+#pc-health-tips {
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 15px;
+}
+
+#pc-health-tips h2 {
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.carousel-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cardcontainer {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    padding: 10px;
+    scroll-behavior: smooth;
+}
+
+.card {
+    position: relative;
+    font-family: 'Poppins', sans-serif;
+    transition: all 300ms;
+    border-radius: 20px;
+    text-decoration: none;
+    color: inherit;
+    width: 20rem;
+    flex: 0 0 auto;
+    background-color: #EFF3F5;
+    transition: opacity 700ms;
+}
+
+.card:hover {
+    box-shadow: 1px 1px 20px -10px #20202049;
+    z-index: 2;
+    transition: opacity 700ms;
+}
+
+.icon {
+    width: 100%;
+    height: 220px;
+    background: #EFF3F5;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+    transition: all 700ms;
+    border-radius: 20px;
+}
+
+.icon img {
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    display: block;
+    transition: opacity 700ms;
+}
+
+.icon .gif {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    padding: 20px;
+    transition: opacity 700ms;
+}
+
+.card:hover .icon img:not(.gif) {
+    opacity: 0;
+    transition: opacity 700ms;
+}
+
+.card:hover .icon .gif {
+    display: block;
+    opacity: 1;
+    padding: 20px;
+    transition: opacity 700ms;
+}
+
+.carousel-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    z-index: 10;
+    border-radius: 50%;
+}
+
+.carousel-button.prev {
+    left: 10px;
+}
+
+.carousel-button.next {
+    right: 10px;
+}
+
+.carousel-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.info__description {
+    text-align: center;
+    padding: 20px;
+}
+
+/* Media Queries para Responsividad */
+@media (max-width: 740px) {
+    nav {
+        flex-direction: column; /* Apilar elementos del navbar */
+        align-items: center; /* Centrar elementos */
+    }
+
+    .logo {
+        margin-bottom: 1rem; /* Espacio debajo del logo */
+    }
+
+    .nav-buttons {
+        justify-content: center; /* Centrar botones en el navbar */
+    }
+
+    main {
+        padding: 1rem; /* Reducir padding en pantallas pequeñas */
+    }
+
+    .card {
+        width: 100%; /* Las tarjetas ocupan el 100% del ancho en pantallas pequeñas */
+    }
+
+    .carousel-button {
+        padding: 8px; /* Reducir tamaño de botones en pantallas pequeñas */
+    }
+
+    footer {
+        gap: 10px; /* Reducir espacio entre elementos del footer */
+    }
+}
+
+@media (max-width: 480px) {
+    h1 {
+        font-size: 1.5rem; /* Ajustar tamaño del título en pantallas pequeñas */
+    }
+
+    footer a {
+        font-size: 20px; /* Ajustar tamaño de texto en enlaces del footer */
+    }
+
+    .info__description {
+        padding: 15px; /* Reducir padding en la descripción */
+    }
+}
+
+/*Sobre mi*/
+
+#sobre-mi {
+    padding: 2rem;
+    background-color: #F9F9F9; /* Color de fondo de la sección */
+    border-radius: 15px;
+    text-align: center;
+}
+
+.sobre-mi-container {
+    max-width: 600px; /* Ancho máximo de la sección */
+    margin: 0 auto; /* Centrar la sección */
+}
+
+.profile-image {
+    width: 150px; /* Ancho de la imagen del perfil */
+    height: 150px; /* Alto de la imagen del perfil */
+    border-radius: 50%; /* Hacer la imagen circular */
+    object-fit: cover; /* Ajustar imagen dentro del contenedor */
+    margin-bottom: 1rem; /* Espacio debajo de la imagen */
+}
+
+.contact-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem; /* Espacio entre los botones */
+    margin-top: 1rem; /* Espacio superior de los botones */
+}
+
+.contact-button {
+    background-color: #184A8C; /* Color de fondo de los botones */
+    color: #F2DFBB; /* Color del texto de los botones */
+    padding: 0.5rem 1rem; /* Padding de los botones */
+    border: none;
+    border-radius: 5px; /* Bordes redondeados */
+    text-decoration: none; /* Sin subrayado */
+    display: flex;
+    align-items: center; /* Centrar el icono y texto verticalmente */
+    transition: background-color 0.3s; /* Transición de color de fondo */
+}
+
+.contact-button:hover {
+    background-color: #4988BF; /* Color de fondo al pasar el ratón */
+}
+
+.contact-button i {
+    margin-right: 0.5rem; /* Espacio entre icono y texto */
+}
+
+/* Media Queries para diseño responsive */
+@media (max-width: 768px) {
+    .sobre-mi-container {
+        padding: 1rem; /* Reducir padding en pantallas más pequeñas */
+    }
+
+    .profile-image {
+        width: 120px; /* Ajustar el tamaño de la imagen en pantallas pequeñas */
+        height: 120px;
+    }
+
+    .contact-buttons {
+         /* Apilar botones en lugar de alinearlos horizontalmente */
+        gap: 0.5rem; /* Espacio entre botones cuando están apilados */
+        flex-wrap: wrap;
+    }
+}
+
+@media (max-width: 480px) {
+    h2 {
+        font-size: 1.5rem; /* Reducir tamaño de fuente del título */
+    }
+
+    .profile-image {
+        width: 100px; /* Ajustar el tamaño de la imagen aún más */
+        height: 100px;
+    }
+
+    .contact-button {
+        padding: 0.4rem 0.8rem; /* Reducir padding de botones para pantallas pequeñas */
+    }
+}

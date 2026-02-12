@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FC | Técnico Informático</title>
+    <meta name="description" content="Franco Calegari - Técnico informático. Reparación, mantenimiento y optimización de PC.">
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/274f77f0e3.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="/" class="logo" id="logo">FC</a>
+            <div class="nav-links">
+                <a href="#tips" class="nav-link">Tips</a>
+                <a href="#sobre-mi" class="nav-link">Sobre Mí</a>
+                <a href="#contacto" class="nav-link">Contacto</a>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <!-- Hero Search -->
+        <section class="hero-search" id="search">
+            <div class="hero-content">
+                <div class="hero-badge">🔧 Servicio Técnico</div>
+                <h1>Consultá tu <span class="gradient-text">informe</span></h1>
+                <p class="hero-subtitle">Ingresá tu código de cliente para ver el estado de tu equipo</p>
+                <div class="search-box">
+                    <div class="search-input-wrapper">
+                        <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                        <input type="text" id="clienteCodigo" placeholder="Código de cliente..." autocomplete="off">
+                    </div>
+                    <button id="buscarBtn" class="btn-primary">
+                        <span>Buscar</span>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+                <div id="searchFeedback" class="search-feedback"></div>
+            </div>
+            <div class="hero-decoration">
+                <div class="orbit-ring"></div>
+                <div class="orbit-ring orbit-ring-2"></div>
+                <div class="floating-icon fi-1"><i class="fa-solid fa-laptop"></i></div>
+                <div class="floating-icon fi-2"><i class="fa-solid fa-microchip"></i></div>
+                <div class="floating-icon fi-3"><i class="fa-solid fa-hard-drive"></i></div>
+                <div class="floating-icon fi-4"><i class="fa-solid fa-memory"></i></div>
+            </div>
+        </section>
+
+        <!-- Tips Carousel -->
+        <section class="tips-section" id="tips">
+            <div class="section-header">
+                <h2>Recomendaciones para tu <span class="gradient-text">PC</span></h2>
+                <p>Consejos para mantener tu equipo en óptimas condiciones</p>
+            </div>
+            <div class="carousel-wrapper">
+                <button id="prevButton" class="carousel-btn carousel-btn-prev" aria-label="Anterior">
+                    <i class="fa-solid fa-chevron-left"></i>
+                </button>
+                <div class="carousel-track" id="carouselTrack">
+                    <% tips.forEach(tip => { %>
+                    <a href="<%= tip.link %>" class="tip-card" target="_blank" rel="noopener">
+                        <div class="tip-card-visual">
+                            <img src="<%= tip.img %>" alt="<%= tip.alt %>" class="tip-thumb">
+                            <img src="<%= tip.gif %>" alt="<%= tip.alt %>" class="tip-gif">
+                        </div>
+                        <div class="tip-card-info">
+                            <h3><%= tip.title %></h3>
+                            <p><%= tip.description %></p>
+                        </div>
+                    </a>
+                    <% }) %>
+                </div>
+                <button id="nextButton" class="carousel-btn carousel-btn-next" aria-label="Siguiente">
+                    <i class="fa-solid fa-chevron-right"></i>
+                </button>
+            </div>
+        </section>
+
+        <!-- Sobre Mí -->
+        <section class="about-section" id="sobre-mi">
+            <div class="about-card">
+                <div class="about-avatar">
+                    <img src="https://avatars.githubusercontent.com/u/145405665?v=4" alt="Franco Calegari">
+                    <div class="avatar-ring"></div>
+                </div>
+                <h2>Franco Calegari</h2>
+                <p class="about-role">Web Developer & Técnico Informático</p>
+                <p class="about-bio">
+                    Soy Franco Calegari, Web Developer y como hobby reparo computadoras. 
+                    Tengo más de 4 años reparando computadoras, flasheando sistemas operativos 
+                    tanto en dispositivos Android como en Windows.
+                </p>
+                <div class="contact-links" id="contacto">
+                    <a href="https://wa.me/5492617735869" target="_blank" class="contact-chip whatsapp">
+                        <i class="fa-brands fa-whatsapp"></i> WhatsApp
+                    </a>
+                    <a href="https://t.me/francocalegari" target="_blank" class="contact-chip telegram">
+                        <i class="fa-brands fa-telegram"></i> Telegram
+                    </a>
+                    <a href="mailto:francocalegari55@gmail.com" class="contact-chip email">
+                        <i class="fa-solid fa-envelope"></i> Correo
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <span class="footer-brand">FC</span>
+            <div class="footer-links">
+                <a href="mailto:francocalegari55@gmail.com" aria-label="Email"><i class="fa-solid fa-envelope"></i></a>
+                <a href="https://wa.me/5492617735869" target="_blank" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+                <a href="https://francocalegari.github.io/PortfolioFrancoCalegari/" target="_blank" aria-label="GitHub"><i class="fa-brands fa-github"></i></a>
+            </div>
+            <p class="footer-copy">&copy; 2025 Franco Calegari. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Admin | FC</title>
+    <link rel="stylesheet" href="/css/admin.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/274f77f0e3.js" crossorigin="anonymous"></script>
+</head>
+<body class="dashboard-body">
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <span class="sidebar-logo">FC</span>
+            <span class="sidebar-title">Admin</span>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="/admin" class="sidebar-link active">
+                <i class="fa-solid fa-gauge-high"></i>
+                <span>Dashboard</span>
+            </a>
+            <a href="/" target="_blank" class="sidebar-link">
+                <i class="fa-solid fa-globe"></i>
+                <span>Ver Sitio</span>
+            </a>
+            <a href="/admin/logout" class="sidebar-link sidebar-logout">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                <span>Cerrar Sesión</span>
+            </a>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="dashboard-main">
+        <!-- Topbar -->
+        <header class="topbar">
+            <button class="sidebar-toggle" id="sidebarToggle">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+            <div class="topbar-right">
+                <span class="topbar-greeting">Hola, <strong><%= user %></strong></span>
+                <div class="topbar-avatar"><%= user.charAt(0).toUpperCase() %></div>
+            </div>
+        </header>
+
+        <!-- Content -->
+        <div class="dashboard-content">
+            <!-- Stats -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon si-blue"><i class="fa-solid fa-users"></i></div>
+                    <div class="stat-info">
+                        <h3><%= stats.totalClientes %></h3>
+                        <p>Total Clientes</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon si-green"><i class="fa-solid fa-calendar-check"></i></div>
+                    <div class="stat-info">
+                        <h3><%= stats.thisMonth %></h3>
+                        <p>Este Mes</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon si-purple"><i class="fa-solid fa-clipboard-list"></i></div>
+                    <div class="stat-info">
+                        <h3><%= stats.withFicha %></h3>
+                        <p>Con Ficha Técnica</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon si-orange"><i class="fa-solid fa-cube"></i></div>
+                    <div class="stat-info">
+                        <h3><%= stats.totalApps %></h3>
+                        <p>Apps Instaladas</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Clients Table -->
+            <div class="table-card">
+                <div class="table-header">
+                    <h2><i class="fa-solid fa-users"></i> Clientes</h2>
+                    <div class="table-actions">
+                        <div class="search-wrapper">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                            <input type="text" id="searchInput" placeholder="Buscar cliente...">
+                        </div>
+                        <button class="btn-add" id="btnAdd">
+                            <i class="fa-solid fa-plus"></i>
+                            <span>Nuevo Cliente</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="data-table" id="clientesTable">
+                        <thead>
+                            <tr>
+                                <th>Código</th>
+                                <th>Nombre</th>
+                                <th>Apps</th>
+                                <th>Fecha</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% clientes.forEach(c => { %>
+                            <tr data-id="<%= c.id %>">
+                                <td><span class="badge-code"><%= c.codigo %></span></td>
+                                <td><strong><%= c.nombre %></strong></td>
+                                <td><span class="badge-count"><%= c.apps_count %></span></td>
+                                <td><%= new Date(c.created_at).toLocaleDateString('es-AR') %></td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <a href="/cliente/<%= c.codigo %>" target="_blank" class="btn-action btn-view" title="Ver"><i class="fa-solid fa-eye"></i></a>
+                                        <button class="btn-action btn-edit" title="Editar" data-id="<%= c.id %>"><i class="fa-solid fa-pen"></i></button>
+                                        <button class="btn-action btn-delete" title="Eliminar" data-id="<%= c.id %>" data-nombre="<%= c.nombre %>"><i class="fa-solid fa-trash"></i></button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <% }) %>
+                        </tbody>
+                    </table>
+                </div>
+                <% if (clientes.length === 0) { %>
+                <div class="empty-state">
+                    <i class="fa-solid fa-inbox"></i>
+                    <p>No hay clientes registrados</p>
+                </div>
+                <% } %>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Create/Edit Client -->
+    <div class="modal-overlay" id="clientModal">
+        <div class="modal-content modal-large">
+            <button class="modal-close" id="closeModal">&times;</button>
+            <h2 id="modalTitle"><i class="fa-solid fa-user-plus"></i> Nuevo Cliente</h2>
+
+            <form id="clientForm" class="admin-form">
+                <input type="hidden" id="editId" value="">
+
+                <!-- Basic Info -->
+                <div class="form-section">
+                    <h3><i class="fa-solid fa-info-circle"></i> Información Básica</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="f_codigo">Código *</label>
+                            <input type="text" id="f_codigo" required placeholder="Ej: 12345">
+                        </div>
+                        <div class="form-group">
+                            <label for="f_nombre">Nombre *</label>
+                            <input type="text" id="f_nombre" required placeholder="Nombre del cliente">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="f_saludo">Saludo</label>
+                        <input type="text" id="f_saludo" placeholder="Hola buenas soy el técnico..." value="Hola buenas soy el técnico informático Franco Calegari versión 2025">
+                    </div>
+                </div>
+
+                <!-- Report -->
+                <div class="form-section">
+                    <h3><i class="fa-solid fa-clipboard"></i> Informe</h3>
+                    <div class="form-group">
+                        <label for="f_tratamiento">Tratamiento Realizado</label>
+                        <textarea id="f_tratamiento" rows="4" placeholder="Detalle del trabajo realizado (una línea por ítem)"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="f_problema">Problema</label>
+                        <textarea id="f_problema" rows="3" placeholder="Descripción del problema detectado"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="f_notas">Notas</label>
+                        <textarea id="f_notas" rows="2" placeholder="Notas adicionales"></textarea>
+                    </div>
+                </div>
+
+                <!-- Apps -->
+                <div class="form-section">
+                    <h3><i class="fa-solid fa-cube"></i> Apps Instaladas</h3>
+                    <div id="appsContainer"></div>
+                    <button type="button" class="btn-add-small" id="addAppBtn">
+                        <i class="fa-solid fa-plus"></i> Agregar App
+                    </button>
+                </div>
+
+                <!-- Ficha Técnica -->
+                <div class="form-section">
+                    <h3><i class="fa-solid fa-microchip"></i> Ficha Técnica</h3>
+                    <div class="template-selector">
+                        <label>Plantilla Predeterminada</label>
+                        <div class="template-buttons" id="templateButtons">
+                            <button type="button" class="template-btn" data-template="android">
+                                <i class="fa-brands fa-android"></i>
+                                <span>Android</span>
+                            </button>
+                            <button type="button" class="template-btn" data-template="pc">
+                                <i class="fa-solid fa-desktop"></i>
+                                <span>PC</span>
+                            </button>
+                            <button type="button" class="template-btn" data-template="iphone">
+                                <i class="fa-brands fa-apple"></i>
+                                <span>iPhone</span>
+                            </button>
+                            <button type="button" class="template-btn" data-template="ipad">
+                                <i class="fa-solid fa-tablet-screen-button"></i>
+                                <span>iPad</span>
+                            </button>
+                            <button type="button" class="template-btn" data-template="mac">
+                                <i class="fa-solid fa-laptop"></i>
+                                <span>Mac</span>
+                            </button>
+                        </div>
+                    </div>
+                    <!-- ADB Panel (shown when Android selected) -->
+                    <div class="adb-panel" id="adbPanel" style="display:none;">
+                        <div class="adb-header">
+                            <div class="adb-title">
+                                <i class="fa-brands fa-android"></i>
+                                <span>ADB — Extracción de Dispositivo</span>
+                            </div>
+                            <div class="adb-status" id="adbStatus">
+                                <span class="adb-dot disconnected"></span>
+                                <span id="adbStatusText">Desconectado</span>
+                            </div>
+                        </div>
+                        <p class="adb-desc">Conectá tu dispositivo Android por USB con <strong>depuración USB activada</strong> y presioná el botón para extraer los datos automáticamente.</p>
+                        <div class="adb-actions">
+                            <button type="button" class="btn-adb-check" id="btnAdbCheck">
+                                <i class="fa-solid fa-plug"></i>
+                                <span>Verificar Conexión</span>
+                            </button>
+                            <button type="button" class="btn-adb-extract" id="btnAdbExtract" disabled>
+                                <i class="fa-solid fa-download"></i>
+                                <span>Extraer Información</span>
+                            </button>
+                        </div>
+                        <div class="adb-log" id="adbLog" style="display:none;">
+                            <div class="adb-log-header">
+                                <i class="fa-solid fa-terminal"></i> Log de extracción
+                            </div>
+                            <div class="adb-log-body" id="adbLogBody"></div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>CPU Nombre</label>
+                            <input type="text" id="ft_cpu_nombre" placeholder="Intel Core i5-...">
+                        </div>
+                        <div class="form-group">
+                            <label>CPU Potencia</label>
+                            <input type="text" id="ft_cpu_potencia" placeholder="3.4GHz">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>CPU Fabricante</label>
+                            <input type="text" id="ft_cpu_fabricante" placeholder="Intel">
+                        </div>
+                        <div class="form-group">
+                            <label>CPU Arquitectura</label>
+                            <input type="text" id="ft_cpu_arquitectura" value="64 bits">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>GPU Nombre</label>
+                            <input type="text" id="ft_gpu_nombre" placeholder="Intel HD Graphics">
+                        </div>
+                        <div class="form-group">
+                            <label>GPU VRAM</label>
+                            <input type="text" id="ft_gpu_vram" placeholder="512mb">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>GPU Fabricante</label>
+                            <input type="text" id="ft_gpu_fabricante" placeholder="Intel">
+                        </div>
+                        <div class="form-group">
+                            <label>RAM Capacidad</label>
+                            <input type="text" id="ft_ram_capacidad" placeholder="8GB">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>RAM Slots</label>
+                            <input type="text" id="ft_ram_slots" placeholder="2 slots SODIMM">
+                        </div>
+                        <div class="form-group">
+                            <label>Almacenamiento Nombre</label>
+                            <input type="text" id="ft_almacenamiento_nombre" placeholder="Samsung 860 EVO">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Tipo Disco</label>
+                            <input type="text" id="ft_almacenamiento_tipo" placeholder="SSD">
+                        </div>
+                        <div class="form-group">
+                            <label>Capacidad</label>
+                            <input type="text" id="ft_almacenamiento_capacidad" placeholder="500GB">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>WiFi</label>
+                            <input type="text" id="ft_wifi" placeholder="2.4hz y 5.0hz 802.11ac">
+                        </div>
+                        <div class="form-group">
+                            <label>Ethernet</label>
+                            <input type="text" id="ft_ethernet" placeholder="1Gbit">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Bluetooth</label>
+                            <input type="text" id="ft_bluetooth" placeholder="5.0">
+                        </div>
+                        <div class="form-group">
+                            <label>Placa Base</label>
+                            <input type="text" id="ft_placa_base" placeholder="Modelo placa base">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>BIOS Versión</label>
+                            <input type="text" id="ft_bios_version">
+                        </div>
+                        <div class="form-group">
+                            <label>BIOS Fecha</label>
+                            <input type="text" id="ft_bios_fecha">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Pantalla Specs</label>
+                            <input type="text" id="ft_pantalla_specs" placeholder="Integrada">
+                        </div>
+                        <div class="form-group">
+                            <label>Pantalla Tipo</label>
+                            <input type="text" id="ft_pantalla_tipo" placeholder="LCD / IPS">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Resolución</label>
+                            <input type="text" id="ft_pantalla_resolucion" placeholder="1920x1080">
+                        </div>
+                        <div class="form-group">
+                            <label>Refresco</label>
+                            <input type="text" id="ft_pantalla_refresco" placeholder="60hz">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Puertos I/O</label>
+                        <input type="text" id="ft_io_puertos" placeholder="USB 3.0 x3, HDMI x1, SD x1, 3.5mm x1">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>SO Nombre</label>
+                            <input type="text" id="ft_so_nombre" placeholder="Windows 10 Pro">
+                        </div>
+                        <div class="form-group">
+                            <label>SO Distribución</label>
+                            <input type="text" id="ft_so_distribucion" placeholder="Mini OS 10 2024">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="btn-cancel" id="cancelBtn">Cancelar</button>
+                    <button type="submit" class="btn-save">
+                        <i class="fa-solid fa-floppy-disk"></i>
+                        <span>Guardar</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Delete Confirmation -->
+    <div class="modal-overlay" id="deleteModal">
+        <div class="modal-content modal-small">
+            <div class="delete-icon"><i class="fa-solid fa-triangle-exclamation"></i></div>
+            <h3>¿Eliminar Cliente?</h3>
+            <p id="deleteMsg">¿Estás seguro de que deseas eliminar este cliente?</p>
+            <div class="form-actions">
+                <button class="btn-cancel" id="cancelDelete">Cancelar</button>
+                <button class="btn-delete-confirm" id="confirmDelete">
+                    <i class="fa-solid fa-trash"></i> Eliminar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast">
+        <i class="fa-solid fa-circle-check"></i>
+        <span id="toastMsg">Operación exitosa</span>
+    </div>
+
+    <script src="/js/admin.js"></script>
+</body>
+</html>

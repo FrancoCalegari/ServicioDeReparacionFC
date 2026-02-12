@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login | FC</title>
+    <link rel="stylesheet" href="/css/admin.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/274f77f0e3.js" crossorigin="anonymous"></script>
+</head>
+<body class="login-body">
+    <div class="login-wrapper">
+        <div class="login-card">
+            <div class="login-header">
+                <div class="login-logo">FC</div>
+                <h1>Admin Panel</h1>
+                <p>Ingresa tus credenciales para acceder</p>
+            </div>
+            <% if (error) { %>
+            <div class="login-error">
+                <i class="fa-solid fa-circle-exclamation"></i>
+                <span><%= error %></span>
+            </div>
+            <% } %>
+            <form method="POST" action="/admin/login" class="login-form">
+                <div class="form-group">
+                    <label for="username">
+                        <i class="fa-solid fa-user"></i>
+                        <span>Usuario</span>
+                    </label>
+                    <input type="text" name="username" id="username" placeholder="Ingresa tu usuario" required autocomplete="username">
+                </div>
+                <div class="form-group">
+                    <label for="password">
+                        <i class="fa-solid fa-lock"></i>
+                        <span>Contraseña</span>
+                    </label>
+                    <input type="password" name="password" id="password" placeholder="Ingresa tu contraseña" required autocomplete="current-password">
+                </div>
+                <button type="submit" class="login-btn">
+                    <span>Iniciar Sesión</span>
+                    <i class="fa-solid fa-arrow-right"></i>
+                </button>
+            </form>
+            <a href="/" class="back-link"><i class="fa-solid fa-arrow-left"></i> Volver al sitio</a>
+        </div>
+        <div class="login-bg-shapes">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+            <div class="shape shape-3"></div>
+        </div>
+    </div>
+</body>
+</html>

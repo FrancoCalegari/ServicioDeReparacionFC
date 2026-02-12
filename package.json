@@ -1,0 +1,17 @@
+{
+	"name": "tarjeta-recomendacion",
+	"version": "1.0.0",
+	"description": "Sistema de tarjetas de recomendación para reparación de PC",
+	"main": "server.js",
+	"scripts": {
+		"start": "node server.js",
+		"dev": "node server.js"
+	},
+	"dependencies": {
+		"bcryptjs": "^2.4.3",
+		"better-sqlite3": "^11.0.0",
+		"ejs": "^3.1.10",
+		"express": "^4.21.0",
+		"express-session": "^1.18.0"
+	}
+}

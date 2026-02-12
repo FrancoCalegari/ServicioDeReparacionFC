@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cliente Test</title>
+    <link rel="stylesheet" href="./assets/css/cliente.css">
+    <link rel="stylesheet" href="./assets/css/styles.css">
+    <script src="https://kit.fontawesome.com/274f77f0e3.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <nav>
+        <div><a href="./index.html" class="logo">FC</a></div>
+        <div class="nav-buttons">
+            <button onclick="location.href='#contacto'">Contacto</button>
+            <button onclick="location.href='#sobre-mi'">Sobre mí</button>
+        </div>
+    </nav>
+    <main id="containerrecomendacion">
+        <section>
+            <h1>Informe</h1>
+            <p>Hola buenas soy el técnico informático Franco Calegari versión 2024</p>
+            <h3>Tratamiento Realizado:</h3>
+            <ul>
+                <li>La PC quedó con dos particiones siendo "C:/sistema" y "D:/Datos" y "Windows 10 Pro Mini OS (una distribución para el rendimiento), ya viene activado", viene instalado con WinRar, Word, Excel, PowerPoint, Visual Studio Code, DB Browser, Google Chrome, 3uTools, Mem Reduct y un visualizador de fotos.</li>
+                <li>No recomiendo utilizar CCleaner ya que hace mucho tiempo dejó de funcionar y causa inestabilidad del sistema. Si se nota trabada la PC, utilizar Mem Reduct donde dice "limpiar memoria"; eso ayudará a la PC a estar en óptimas condiciones.</li>
+                <li>No recomiendo instalar un antivirus ya que esa es la causa de que tenga poco rendimiento.</li>
+                <li>Tratar de no dejar archivos o muchas cosas en la pantalla principal o escritorio ya que eso ralentiza la computadora cualquier computadora.</li>
+                <li>Como un pequeño extra, viene con CS1.6 y Half-Life para pasar el rato.</li>
+            </ul>
+            <h4>Notas:</h4>
+            <p>Si se desactiva Windows o Word/Excel/PowerPoint, me pueden decir; eso viene sin costo adicional jaja.</p>
+            <button id="infoTecDevice" class="btnClients">Ficha Tecnica</button>
+
+            <div class="widgetcontainer">
+                <div class="widget">
+                    <div class="widgetapp">
+                        <a href="https://www.microsoft.com/es-ar/microsoft-365/what-is-microsoft-365" target="_blank" rel="noopener noreferrer"><img src="https://cdn.worldvectorlogo.com/logos/office-2.svg" alt="App 1" class="widgetappimg"></a>
+                    </div>
+                    <div class="widgetapp">
+                        <a href="https://es.wikipedia.org/wiki/Counter-Strike" target="_blank" rel="noopener noreferrer"><img src="https://cdn2.steamgriddb.com/icon_thumb/9b04d152845ec0a378394003c96da594.png" alt="App 2" class="widgetappimg"></a>
+                    </div>
+                    <div class="widgetapp">
+                        <a href="https://es.wikipedia.org/wiki/Half-Life" target="_blank" rel="noopener noreferrer"><img src="https://static-00.iconduck.com/assets.00/half-life-icon-2048x2026-wsttw2zd.png" alt="App 3" class="widgetappimg"></a>
+                    </div>
+                    
+                </div>
+            </div>
+            
+            
+            <h4>Problema:</h4>
+            <p>La computadora presentaba fallas del sistema ademas de requerir una limpieza general y una actualizacion del Software.</p>
+            <h4><strong>Datos de Contacto:</strong></h4>
+            <ul>
+                <li>Teléfono/Whatsapp: +54 9 2617735869</li>
+                <li>Instagram: <a href="https://www.instagram.com/francocalegari_dw" target="_blank">@francocalegari_dw</a></li>
+            </ul>
+        </section>
+        <div id="techInfoPopup" class="popup-overlay">
+            <div class="popup-content">
+                <span class="close-button">&times;</span>
+                <h2>Información Técnica del Dispositivo</h2>
+                <div class="info-cards">
+                    <div class="info-card">
+                        <i class="fa-solid fa-microchip"></i>
+                        <p><strong>CPU:</strong></p>
+                        <ul>
+                            <li>Nombre</li>
+                            <li>Potencia</li>
+                            <li>Fabricante</li>
+                            <li>Arquitectura</li>
+                        </ul>
+                    </div>
+                    <div class="info-card">
+                        <i class="fa-solid fa-tachograph-digital"></i>
+                        <p><strong>GPU:</strong></p>
+                        <ul>
+                            <li>Fabricante</li>
+                            <li>VRAM</li>
+                            <li>Nombre</li>
+                        </ul>
+                    </div>
+                    <div class="info-card">
+                        <i class="fa-solid fa-memory"></i>
+                        <p><strong>RAM:</strong></p>
+                        <ul>
+                            <li>Capacidad</li>
+                            <li>Slots Disponibles</li>
+                        </ul>
+                    </div>
+                    <div class="info-card">
+                        <i class="fa-solid fa-hdd"></i>
+                        <p><strong>Almacenamiento:</strong></p>
+                        <ul>
+                            <li>Nombre</li>
+                            <li>Tipo de Disco</li>
+                            <li>Capacidad</li>
+                        </ul>
+                    </div>
+                    <div class="info-card">
+                        <i class="fa-solid fa-hdd"></i>
+                        <p><strong>Conectividad:</strong></p>
+                        <ul>
+                            <li><i class="fa-solid fa-wifi"></i>Wifi: 2.4hz 802.11n</li>
+                            <li><i class="fa-solid fa-ethernet"></i>Ethernet: 10gbit</li>
+                            <li><i class="fa-brands fa-bluetooth"></i>Bluetooth: 4.1</li>
+                        </ul>
+                    </div>
+                    <div class="info-card">
+                        <i class="fa-solid fa-server"></i>
+                        <p><strong>Placa Base:</strong></p>
+                        <ul>
+                            <li>Modelo</li>
+                        </ul>
+                    </div>
+                    <div class="info-card">
+                        <i class="fa-solid fa-database"></i>
+                        <p><strong>Versión del BIOS:</strong></p>
+                        <ul>
+                            <li>Versión</li>
+                        </ul>
+                    </div>
+                    <div class="info-card">
+                        <i class="fa-solid fa-calendar"></i>
+                        <p><strong>Fecha del BIOS:</strong></p>
+                        <ul>
+                            <li>Fecha</li>
+                        </ul>
+                    </div>
+                    <div class="info-card">
+                        <i class="fa-solid fa-desktop"></i>
+                        <p><strong>Pantalla:</strong></p>
+                        <ul>
+                            <li>Especificaciones</li>
+                        </ul>
+                    </div>
+                    <div class="info-card">
+                        <i class="fa-solid fa-plug"></i>
+                        <p><strong>Entradas y Salidas:</strong></p>
+                        <ul>
+                            <li>Detalles</li>
+                        </ul>
+                    </div>
+                    <div class="info-card">
+                        <i class="fa-solid fa-cogs"></i>
+                        <p><strong>Sistema Operativo:</strong></p>
+                        <ul>
+                            <li>Versión</li>
+                            <li>Modificación</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+        
+    </main>
+    <footer id="contact-info">
+        <a href="mailto:francocalegari55@gmail.com"><i class="fa-solid fa-envelope"></i></a>
+        <a href="https://wa.me/5492617735869" target="_blank"><i class="fa-solid fa-phone"></i></a>
+        <a href="https://francocalegari.github.io/PortfolioFrancoCalegari/" target="_blank"><i class="fa-brands fa-github"></i></a>
+    </footer>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+    const logo = document.querySelector('.logo');
+    const originalText = logo.textContent; // "FC"
+    const animatedText = 'F /Inicio/ C';
+
+    let animationInterval; // Variable para almacenar el intervalo
+
+    logo.addEventListener('mouseover', () => {
+        let index = 0;
+        clearInterval(animationInterval); // Detener cualquier animación en curso
+        animationInterval = setInterval(() => {
+            if (index < animatedText.length) {
+                logo.textContent = animatedText.slice(0, index + 1);
+                index++;
+            } else {
+                clearInterval(animationInterval);
+            }
+        }, 15); // Ajusta la velocidad de la animación aquí
+    });
+
+    logo.addEventListener('mouseout', () => {
+        let index = animatedText.length;
+        clearInterval(animationInterval); // Detener cualquier animación en curso
+        animationInterval = setInterval(() => {
+            if (index > 2) { // Mantener "C" y "F" en pantalla
+                logo.textContent = animatedText.slice(0, index);
+                index--;
+            } else {
+                logo.textContent = originalText; // Cambiar a "FC" rápidamente
+                clearInterval(animationInterval);
+            }
+        }, 15); // Ajusta la velocidad de la animación aquí
+    });
+});
+    </script>
+    <script src="./assets/js/client.js"></script>
+</body>
+</html>

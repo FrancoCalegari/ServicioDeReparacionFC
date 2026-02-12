@@ -1,0 +1,335 @@
+/* Estilos generales */
+#containerrecomendacion {
+    padding: 2rem;
+    background-color: white;
+    margin: 2rem auto;
+    max-width: 800px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+}
+
+#containerrecomendacion h1 {
+    color: #192E59; /* Color del título */
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+#containerrecomendacion section {
+    margin-bottom: 2rem;
+}
+
+#containerrecomendacion section p {
+    color: #192E59; /* Color del texto */
+    line-height: 1.6;
+    margin-bottom: 1rem;
+}
+
+#containerrecomendacion section ul {
+    padding-left: 20px;
+    color: #192E59; /* Color del texto de las listas */
+}
+
+#containerrecomendacion section ul li {
+    margin-bottom: 10px;
+}
+
+#containerrecomendacion section a {
+    color: #184A8C; /* Color de los enlaces */
+    text-decoration: none;
+}
+
+#containerrecomendacion section a:hover {
+    text-decoration: underline;
+}
+
+#containerrecomendacion strong {
+    color: #192E59; /* Color del texto en negrita */
+}
+
+.btnClients {
+    background-color: #4988BF;
+    padding: 0.3rem;
+    border: solid 2px #F2DFBB;
+    border-radius: 8px;
+    color: #F2DFBB;
+    font-weight: bold;
+    transition: cubic-bezier(0.175, 0.885, 0.32, 1.275) 600ms;
+    margin-bottom: 8px;
+}
+
+.btnClients:hover {
+    background-color: #4f799f;
+    cursor: pointer;
+    transform: scale(1.1);
+    transition: cubic-bezier(0.175, 0.885, 0.32, 1.275) 600ms;
+}
+
+#containerrecomendacion {
+    padding: 2rem;
+    background-color: white;
+    margin: 2rem auto;
+    max-width: 800px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+}
+
+#containerrecomendacion h1 {
+    color: #192E59; /* Color del título */
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+#containerrecomendacion section {
+    margin-bottom: 2rem;
+}
+
+#containerrecomendacion section p {
+    color: #192E59; /* Color del texto */
+    line-height: 1.6;
+    margin-bottom: 1rem;
+}
+
+#containerrecomendacion section ul {
+    padding-left: 20px;
+    color: #192E59; /* Color del texto de las listas */
+}
+
+#containerrecomendacion section ul li {
+    margin-bottom: 10px;
+}
+
+#containerrecomendacion section a {
+    color: #184A8C; /* Color de los enlaces */
+    text-decoration: none;
+}
+
+#containerrecomendacion section a:hover {
+    text-decoration: underline;
+}
+
+#containerrecomendacion strong {
+    color: #192E59; /* Color del texto en negrita */
+}
+
+.btnClients {
+    background-color: #4988BF;
+    padding: 0.3rem;
+    border: solid 2px #F2DFBB;
+    border-radius: 8px;
+    color: #F2DFBB;
+    font-weight: bold;
+    transition: cubic-bezier(0.175, 0.885, 0.32, 1.275) 600ms;
+    margin-bottom: 8px;
+}
+
+.btnClients:hover {
+    background-color: #4f799f;
+    cursor: pointer;
+    transform: scale(1.1);
+    transition: cubic-bezier(0.175, 0.885, 0.32, 1.275) 600ms;
+}
+
+#containerrecomendacion {
+    padding: 2rem;
+    background-color: white;
+    margin: 2rem auto;
+    max-width: 800px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+}
+
+#containerrecomendacion h1 {
+    color: #192E59; /* Color del título */
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+#containerrecomendacion section {
+    margin-bottom: 2rem;
+}
+
+#containerrecomendacion section p {
+    color: #192E59; /* Color del texto */
+    line-height: 1.6;
+    margin-bottom: 1rem;
+}
+
+#containerrecomendacion section ul {
+    padding-left: 20px;
+    color: #192E59; /* Color del texto de las listas */
+}
+
+#containerrecomendacion section ul li {
+    margin-bottom: 10px;
+}
+
+#containerrecomendacion section a {
+    color: #184A8C; /* Color de los enlaces */
+    text-decoration: none;
+}
+
+#containerrecomendacion section a:hover {
+    text-decoration: underline;
+}
+
+#containerrecomendacion strong {
+    color: #192E59; /* Color del texto en negrita */
+}
+
+.btnClients {
+    background-color: #4988BF;
+    padding: 0.3rem;
+    border: solid 2px #F2DFBB;
+    border-radius: 8px;
+    color: #F2DFBB;
+    font-weight: bold;
+    transition: cubic-bezier(0.175, 0.885, 0.32, 1.275) 600ms;
+    margin-bottom: 8px;
+}
+
+.btnClients:hover {
+    background-color: #4f799f;
+    cursor: pointer;
+    transform: scale(1.1);
+    transition: cubic-bezier(0.175, 0.885, 0.32, 1.275) 600ms;
+}
+
+/* Estilos para el popup */
+.popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: none; /* Inicialmente oculto */
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    overflow-y: auto; /* Activa la scrollbar si es necesario */
+}
+
+.popup-content {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 700px;
+    width: 90%;
+    position: relative;
+    max-height: 90%; /* Asegura que el popup no exceda la altura de la ventana */
+    overflow-y: auto; /* Agrega scroll en el contenido si es necesario */
+}
+
+.close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+.info-cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.info-card {
+    background: #f2dfbb;
+    padding: 10px;
+    border-radius: 8px;
+    flex: 1 1 calc(50% - 10px);
+    display: flex;
+    align-items: flex-start;
+}
+
+.info-card i {
+    font-size: 1.2rem;
+    margin-right: 10px;
+}
+
+.info-card p {
+    margin: 0;
+    margin-bottom: 5px;
+}
+
+.info-card ul {
+    margin: 0;
+    padding-left: 20px;
+}
+
+.info-card ul li {
+    margin-bottom: 5px;
+    font-size: .8rem;
+}
+
+/* Media query para responsividad */
+@media (max-width: 600px) {
+    .info-card {
+        flex: 1 1 100%; /* Ocupa el 100% del ancho en pantallas pequeñas */
+    }
+
+    .popup-content {
+        max-height: 95%; /* Permite un poco más de altura en pantallas pequeñas */
+    }
+}
+
+
+
+/*widget app*/
+/* General container for the widget */
+.widgetcontainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    background-color: #f9f9f9; /* Light grey background for the widget container */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 420px;
+    margin: auto;
+}
+
+/* Container for the individual apps */
+.widget {
+    display: flex;
+    gap: 10px; /* Space between apps */
+}
+
+/* Individual app container */
+.widgetapp {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 80px;
+    height: 80px;
+    background-color: #fff;
+    border: 2px solid #e0e0e0; /* Light border around each app */
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease-in-out; /* Smooth transition for hover effect */
+}
+
+.widgetapp a {
+    display: flex;
+    justify-content: center;
+}
+
+/* Image inside each app container */
+.widgetappimg {
+    max-width: 60%;
+    max-height: 60%;
+    transition: transform 0.2s ease-in-out; /* Smooth transition for hover effect */
+}
+
+/* Hover effect for app container and link */
+.widgetapp:hover, .widgetapp a:hover {
+    transform: scale(1.1);
+    cursor: pointer; /* Pointer cursor on hover */
+}
+
+/* Hover effect for app image */
+.widgetapp:hover .widgetappimg {
+    transform: scale(1.1);
+}

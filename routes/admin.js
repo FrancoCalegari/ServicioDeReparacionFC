@@ -18,9 +18,7 @@ router.get("/login", (req, res) => {
 
 router.post("/login", (req, res) => {
 	const { username, password } = req.body;
-	const user = db
-		.prepare("SELECT * FROM admin_users WHERE username = ?")
-		.get(username);
+	const user = db.getAdminUser(username);
 
 	if (user && bcrypt.compareSync(password, user.password)) {
 		req.session.adminId = user.id;
@@ -39,26 +37,8 @@ router.get("/logout", (req, res) => {
 
 // ─── Dashboard ───
 router.get("/", requireAuth, (req, res) => {
-	const clientes = db
-		.prepare(
-			`
-    SELECT c.*, 
-      (SELECT COUNT(*) FROM apps_instaladas WHERE cliente_id = c.id) as apps_count
-    FROM clientes c ORDER BY c.created_at DESC
-  `,
-		)
-		.all();
-
-	const stats = {
-		totalClientes: clientes.length,
-		thisMonth: db
-			.prepare(
-				`SELECT COUNT(*) as c FROM clientes WHERE created_at >= date('now', 'start of month')`,
-			)
-			.get().c,
-		withFicha: db.prepare(`SELECT COUNT(*) as c FROM fichas_tecnicas`).get().c,
-		totalApps: db.prepare(`SELECT COUNT(*) as c FROM apps_instaladas`).get().c,
-	};
+	const clientes = db.getClientes();
+	const stats = db.getStats();
 
 	res.render("admin/dashboard", {
 		clientes,
@@ -69,17 +49,11 @@ router.get("/", requireAuth, (req, res) => {
 
 // ─── API: Get single client ───
 router.get("/api/clientes/:id", requireAuth, (req, res) => {
-	const cliente = db
-		.prepare("SELECT * FROM clientes WHERE id = ?")
-		.get(req.params.id);
+	const cliente = db.getCliente(req.params.id);
 	if (!cliente) return res.status(404).json({ error: "Cliente no encontrado" });
 
-	const apps = db
-		.prepare("SELECT * FROM apps_instaladas WHERE cliente_id = ?")
-		.all(cliente.id);
-	const ficha = db
-		.prepare("SELECT * FROM fichas_tecnicas WHERE cliente_id = ?")
-		.get(cliente.id);
+	const apps = db.getApps(cliente.id);
+	const ficha = db.getFicha(cliente.id);
 
 	res.json({ cliente, apps, ficha });
 });
@@ -87,96 +61,8 @@ router.get("/api/clientes/:id", requireAuth, (req, res) => {
 // ─── API: Create client ───
 router.post("/api/clientes", requireAuth, (req, res) => {
 	try {
-		const {
-			codigo,
-			nombre,
-			saludo,
-			tratamiento,
-			notas,
-			problema,
-			apps,
-			ficha,
-		} = req.body;
-
-		const result = db
-			.prepare(
-				`
-      INSERT INTO clientes (codigo, nombre, saludo, tratamiento, notas, problema)
-      VALUES (?, ?, ?, ?, ?, ?)
-    `,
-			)
-			.run(
-				codigo,
-				nombre,
-				saludo || "",
-				tratamiento || "",
-				notas || "",
-				problema || "",
-			);
-
-		const clienteId = result.lastInsertRowid;
-
-		// Insert apps
-		if (apps && Array.isArray(apps)) {
-			const insertApp = db.prepare(
-				"INSERT INTO apps_instaladas (cliente_id, nombre, icono_url, link_url) VALUES (?, ?, ?, ?)",
-			);
-			apps.forEach((app) => {
-				insertApp.run(
-					clienteId,
-					app.nombre,
-					app.icono_url || "",
-					app.link_url || "#",
-				);
-			});
-		}
-
-		// Insert ficha técnica
-		if (ficha) {
-			db.prepare(
-				`
-        INSERT INTO fichas_tecnicas (
-          cliente_id, cpu_nombre, cpu_potencia, cpu_fabricante, cpu_arquitectura,
-          gpu_fabricante, gpu_vram, gpu_nombre,
-          ram_capacidad, ram_slots,
-          almacenamiento_nombre, almacenamiento_tipo, almacenamiento_capacidad,
-          wifi, ethernet, bluetooth,
-          placa_base, bios_version, bios_fecha,
-          pantalla_specs, pantalla_tipo, pantalla_resolucion, pantalla_refresco,
-          io_puertos, so_nombre, so_distribucion
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-      `,
-			).run(
-				clienteId,
-				ficha.cpu_nombre || "",
-				ficha.cpu_potencia || "",
-				ficha.cpu_fabricante || "",
-				ficha.cpu_arquitectura || "64 bits",
-				ficha.gpu_fabricante || "",
-				ficha.gpu_vram || "",
-				ficha.gpu_nombre || "",
-				ficha.ram_capacidad || "",
-				ficha.ram_slots || "",
-				ficha.almacenamiento_nombre || "",
-				ficha.almacenamiento_tipo || "",
-				ficha.almacenamiento_capacidad || "",
-				ficha.wifi || "",
-				ficha.ethernet || "",
-				ficha.bluetooth || "",
-				ficha.placa_base || "",
-				ficha.bios_version || "",
-				ficha.bios_fecha || "",
-				ficha.pantalla_specs || "",
-				ficha.pantalla_tipo || "",
-				ficha.pantalla_resolucion || "",
-				ficha.pantalla_refresco || "",
-				ficha.io_puertos || "",
-				ficha.so_nombre || "",
-				ficha.so_distribucion || "",
-			);
-		}
-
-		res.json({ success: true, id: clienteId });
+		const id = db.createCliente(req.body);
+		res.json({ success: true, id });
 	} catch (err) {
 		res.status(400).json({ error: err.message });
 	}
@@ -185,98 +71,7 @@ router.post("/api/clientes", requireAuth, (req, res) => {
 // ─── API: Update client ───
 router.put("/api/clientes/:id", requireAuth, (req, res) => {
 	try {
-		const {
-			codigo,
-			nombre,
-			saludo,
-			tratamiento,
-			notas,
-			problema,
-			apps,
-			ficha,
-		} = req.body;
-
-		db.prepare(
-			`
-      UPDATE clientes SET codigo=?, nombre=?, saludo=?, tratamiento=?, notas=?, problema=?, updated_at=CURRENT_TIMESTAMP
-      WHERE id=?
-    `,
-		).run(
-			codigo,
-			nombre,
-			saludo || "",
-			tratamiento || "",
-			notas || "",
-			problema || "",
-			req.params.id,
-		);
-
-		// Update apps: delete old, insert new
-		db.prepare("DELETE FROM apps_instaladas WHERE cliente_id = ?").run(
-			req.params.id,
-		);
-		if (apps && Array.isArray(apps)) {
-			const insertApp = db.prepare(
-				"INSERT INTO apps_instaladas (cliente_id, nombre, icono_url, link_url) VALUES (?, ?, ?, ?)",
-			);
-			apps.forEach((app) => {
-				insertApp.run(
-					req.params.id,
-					app.nombre,
-					app.icono_url || "",
-					app.link_url || "#",
-				);
-			});
-		}
-
-		// Update ficha
-		db.prepare("DELETE FROM fichas_tecnicas WHERE cliente_id = ?").run(
-			req.params.id,
-		);
-		if (ficha) {
-			db.prepare(
-				`
-        INSERT INTO fichas_tecnicas (
-          cliente_id, cpu_nombre, cpu_potencia, cpu_fabricante, cpu_arquitectura,
-          gpu_fabricante, gpu_vram, gpu_nombre,
-          ram_capacidad, ram_slots,
-          almacenamiento_nombre, almacenamiento_tipo, almacenamiento_capacidad,
-          wifi, ethernet, bluetooth,
-          placa_base, bios_version, bios_fecha,
-          pantalla_specs, pantalla_tipo, pantalla_resolucion, pantalla_refresco,
-          io_puertos, so_nombre, so_distribucion
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-      `,
-			).run(
-				req.params.id,
-				ficha.cpu_nombre || "",
-				ficha.cpu_potencia || "",
-				ficha.cpu_fabricante || "",
-				ficha.cpu_arquitectura || "64 bits",
-				ficha.gpu_fabricante || "",
-				ficha.gpu_vram || "",
-				ficha.gpu_nombre || "",
-				ficha.ram_capacidad || "",
-				ficha.ram_slots || "",
-				ficha.almacenamiento_nombre || "",
-				ficha.almacenamiento_tipo || "",
-				ficha.almacenamiento_capacidad || "",
-				ficha.wifi || "",
-				ficha.ethernet || "",
-				ficha.bluetooth || "",
-				ficha.placa_base || "",
-				ficha.bios_version || "",
-				ficha.bios_fecha || "",
-				ficha.pantalla_specs || "",
-				ficha.pantalla_tipo || "",
-				ficha.pantalla_resolucion || "",
-				ficha.pantalla_refresco || "",
-				ficha.io_puertos || "",
-				ficha.so_nombre || "",
-				ficha.so_distribucion || "",
-			);
-		}
-
+		db.updateCliente(req.params.id, req.body);
 		res.json({ success: true });
 	} catch (err) {
 		res.status(400).json({ error: err.message });
@@ -286,7 +81,7 @@ router.put("/api/clientes/:id", requireAuth, (req, res) => {
 // ─── API: Delete client ───
 router.delete("/api/clientes/:id", requireAuth, (req, res) => {
 	try {
-		db.prepare("DELETE FROM clientes WHERE id = ?").run(req.params.id);
+		db.deleteCliente(req.params.id);
 		res.json({ success: true });
 	} catch (err) {
 		res.status(400).json({ error: err.message });
@@ -358,7 +153,6 @@ router.post("/api/adb/extract", requireAuth, (req, res) => {
 		}
 		if (!cpuNombre) cpuNombre = cpuHardware;
 
-		// CPU cores & max freq
 		const cpuCores = adbCmd("shell nproc") || "";
 		let maxFreq = "";
 		const freqRaw = adbCmd(
@@ -371,7 +165,6 @@ router.post("/api/adb/extract", requireAuth, (req, res) => {
 		const cpuPotencia = [maxFreq, cpuCores ? `${cpuCores} núcleos` : ""]
 			.filter(Boolean)
 			.join(" ");
-
 		const cpuFabricante =
 			adbProp("ro.product.brand") || adbProp("ro.product.manufacturer") || "";
 		const cpuArquitectura = adbProp("ro.product.cpu.abi") || "64 bits ARM";
@@ -443,8 +236,6 @@ router.post("/api/adb/extract", requireAuth, (req, res) => {
 		const wifiInfo = adbCmd("shell dumpsys wifi | grep 'Wi-Fi is'") || "";
 		let wifi = "";
 		if (wifiInfo.toLowerCase().includes("enabled")) {
-			const wifiFreq = adbCmd("shell dumpsys wifi | grep 'Frequency'");
-			wifi = wifiFreq ? "Habilitado" : "Habilitado";
 			const wifiCap = adbCmd("shell dumpsys wifi | grep -i '802.11'");
 			if (wifiCap) wifi = wifiCap.trim().substring(0, 50);
 			else wifi = "2.4GHz y 5GHz";
@@ -455,7 +246,7 @@ router.post("/api/adb/extract", requireAuth, (req, res) => {
 		const btVersion =
 			adbProp("persist.bluetooth.btsnoopenable") !== "" ? "5.0" : "";
 
-		// ── Sistema Operativo ──
+		// ── SO ──
 		const androidVersion = adbProp("ro.build.version.release");
 		const securityPatch = adbProp("ro.build.version.security_patch");
 		const buildDisplay = adbProp("ro.build.display.id");

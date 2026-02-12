@@ -4,15 +4,13 @@ const db = require("../database/db");
 
 // ─── Home Page ───
 router.get("/", (req, res) => {
-	const tips = db.prepare("SELECT * FROM tips").all();
+	const tips = db.getTips();
 	res.render("index", { tips });
 });
 
-// ─── Search Client API ───
+// ─── Search API ───
 router.get("/api/buscar/:codigo", (req, res) => {
-	const cliente = db
-		.prepare("SELECT * FROM clientes WHERE codigo = ?")
-		.get(req.params.codigo);
+	const cliente = db.getClienteByCodigo(req.params.codigo);
 	if (cliente) {
 		res.json({ found: true, url: `/cliente/${cliente.codigo}` });
 	} else {
@@ -22,19 +20,13 @@ router.get("/api/buscar/:codigo", (req, res) => {
 
 // ─── Client Page ───
 router.get("/cliente/:codigo", (req, res) => {
-	const cliente = db
-		.prepare("SELECT * FROM clientes WHERE codigo = ?")
-		.get(req.params.codigo);
+	const cliente = db.getClienteByCodigo(req.params.codigo);
 	if (!cliente) {
 		return res.status(404).render("404");
 	}
 
-	const apps = db
-		.prepare("SELECT * FROM apps_instaladas WHERE cliente_id = ?")
-		.all(cliente.id);
-	const ficha = db
-		.prepare("SELECT * FROM fichas_tecnicas WHERE cliente_id = ?")
-		.get(cliente.id);
+	const apps = db.getApps(cliente.id);
+	const ficha = db.getFicha(cliente.id);
 
 	res.render("cliente", { cliente, apps, ficha });
 });
